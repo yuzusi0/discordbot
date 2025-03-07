@@ -6,6 +6,17 @@ client.once(Events.ClientReady, c => {
     console.log(`Ready! (${c.user.tag})`); // 起動した時に"Ready!"とBotの名前をコンソールに出力する
 });
 
+console.log("DISCORD_TOKEN:", process.env.DISCORD_TOKEN); // トークンが正しく取得されているか確認
+
+client.login(process.env.DISCORD_TOKEN)
+  .then(() => {
+    console.log('Successfully logged in!');
+  })
+  .catch(err => {
+    console.error('Error during login:', err);
+  });
+
+
 client.on(Events.MessageCreate, message => {
     if (message.author.bot) return; // Botには反応しないようにする
     if (message.content.includes("!mach_d")) {
