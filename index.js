@@ -8,7 +8,7 @@ client.once(Events.ClientReady, c => {
 
 console.log("DISCORD_TOKEN:", process.env.DISCORD_TOKEN); // トークンが正しく取得されているか確認
 
-client.login(process.env.DISCORD_TOKEN)
+client.login(process.env.TOKEN)
   .then(() => {
     console.log('Successfully logged in!');
   })
@@ -28,5 +28,5 @@ client.on(Events.MessageCreate, message => {
 });
 
 // 環境変数からトークンを読み込み、ログイン
-client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.TOKEN);
 
