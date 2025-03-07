@@ -1,53 +1,21 @@
-import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
-import 'dotenv/config';
+const { Client, Events, GatewayIntentBits } = require('discord.js');
+require('dotenv').config();  // dotenvをインポートして環境変数を読み込む
 
-const TOKEN = process.env.DISCORD_TOKEN;
-const CLIENT_ID = process.env.CLIENT_ID;
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages] });
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-const commands = [
-  {
-    name: 'mach_diplomacy',
-    description: '交流戦の対戦相手を募集します',
-  },
-  {
-    name: 'mach_information',
-    description: '対戦相手決定の通知メッセージを送信します',
-  }
-];
-
-const rest = new REST({ version: '10' }).setToken(TOKEN);
-
-async function registerCommands() {
-  try {
-    console.log('スラッシュコマンドを登録中...');
-    await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
-    console.log('スラッシュコマンドの登録完了！');
-  } catch (error) {
-    console.error('コマンド登録エラー:', error);
-  }
-}
-
-client.once('ready', () => {
-  console.log(`ログイン完了: ${client.user.tag}`);
-  registerCommands();
+client.once(Events.ClientReady, c => {
+    console.log(`Ready! (${c.user.tag})`); // 起動した時に"Ready!"とBotの名前をコンソールに出力する
 });
 
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-
-  if (interaction.commandName === 'mach_diplomacy') {
-    await interaction.reply(
-      '時交流戦お相手募集します！\nこちらBC\n主催こちら持てます\n平均mmr\nSorry, Japanese clan only\n#mkmg'
-    );
-  }
-
-  if (interaction.commandName === 'mach_information') {
-    await interaction.reply(
-      '@\n対戦お相手決まりました！\nBCvs\n05op\nhost yuzusio\n生存確認含みます！！'
-    );
-  }
+client.on(Events.MessageCreate, message => {
+    if (message.author.bot) return; // Botには反応しないようにする
+    if (message.content.includes("!mach_d")) {
+        message.channel.send("@\n対戦お相手決まりました！\nBCvs\n05op\nhost yuzusio\n生存確認含みます！！");
+    }
+    if (message.content.includes("!mach_i")) {
+        message.channel.send("時交流戦お相手募集します！\nこちらBC\n主催こちら持てます\n平均mmr\nSorry, Japanese clan only\n#mkmg");
+    }
 });
 
-client.login(TOKEN);
+// 環境変数からトークンを読み込み、ログイン
+client.login(process.env.DISCORD_TOKEN);
