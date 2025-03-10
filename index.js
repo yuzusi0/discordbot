@@ -74,7 +74,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
         // メッセージを組み立てて送信
         await interaction.reply(`
-${time}時交流戦お相手募集します！
+${time}交流戦お相手募集します！
 こちらBC
 ${hostMessage}
 平均mmr${mmr}
