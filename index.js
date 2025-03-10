@@ -20,4 +20,4 @@ client.on(Events.MessageCreate, message => {
 });
 
 // 環境変数からトークンを読み込み、ログイン
-client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.TOKEN);
