@@ -1,6 +1,6 @@
 import { Client, Events, GatewayIntentBits } from 'discord.js'; // ESモジュール形式
 import { SlashCommandBuilder } from '@discordjs/builders'; // スラッシュコマンドを作成するために必要
-import { token } from './config.js'; // トークンを環境変数または別ファイルから取得
+
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] }); // ギルドのイベントを処理する
 
@@ -37,6 +37,5 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 });
 
-// トークンでログイン
-client.login(token);
-
+// 環境変数からトークンを読み込み、ログイン
+client.login(process.env.DISCORD_TOKEN);
