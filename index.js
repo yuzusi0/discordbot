@@ -1,4 +1,7 @@
-const { Client, Events, GatewayIntentBits } = require('discord.js');
+import { Client, Events, GatewayIntentBits } from 'discord.js';
+import dotenv from 'dotenv';  // dotenvをインポートして環境変数を読み込む
+
+dotenv.config();  // .envファイルの環境変数を読み込む
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages] });
 
@@ -17,4 +20,4 @@ client.on(Events.MessageCreate, message => {
 });
 
 // 環境変数からトークンを読み込み、ログイン
-client.login(process.env.TOKEN);
+client.login(process.env.DISCORD_TOKEN);
